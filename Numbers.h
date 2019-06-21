@@ -8,6 +8,7 @@ public:
 	virtual void Out(ofstream &ofst) = 0; // вывод
 	virtual float numbers_s() = 0;
 	number() {};
+	bool Compare(number &others);
 };
 class container
 {
@@ -18,6 +19,8 @@ private:
 		Node* Next;
 		Node* Prev;
 		number* data;
+		void Processsort(Node* &Top);//меняет местами 2 элемента и изменяет верхушку списка
+		void castl();
 	};
 	Node* Top;
 	int count;
@@ -26,9 +29,9 @@ public:
 	void Out(ofstream &ofst); // вывод
 	void Clear(); // очистка контейнера от фигур
 	container(); // инициализация контейнера
+	void Sort();
 	~container() { Clear(); }
 };
-
 
 class complex : public number 
 {
