@@ -9,6 +9,7 @@ public:
 	virtual float numbers_s() = 0;
 	number() {};
 	bool Compare(number &others);
+	virtual void OutComp(ofstream &ofst);
 };
 class container
 {
@@ -25,6 +26,7 @@ private:
 	Node* Top;
 	int count;
 public:
+	void OutComp(ofstream &ofst);
 	void In(ifstream &ifst); // ввод
 	void Out(ofstream &ofst); // вывод
 	void Clear(); // очистка контейнера от фигур
@@ -42,6 +44,7 @@ public:
 	void InData(ifstream &ifst); // ввод
 	void Out(ofstream &ofst); // вывод
 	float numbers_s();
+	void OutComp(ofstream &ofst);
 	complex() {} // создание без инициализации.
 };
 class simple : public number 

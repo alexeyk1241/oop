@@ -233,3 +233,22 @@ void container::Out(ofstream & ofst)
 		current = current->Next;
 	}
 }
+
+void number::OutComp(ofstream & ofst)
+{
+	ofst << endl;
+}
+void complex::OutComp(ofstream &ofst)
+{
+	Out(ofst);
+}
+void container::OutComp(ofstream & ofst)
+{
+	ofst << "Only complex" << endl;
+	Node* current = Top;
+	for (int i = 0; i < count; i++) {
+		ofst << i << ": ";
+		current->data->OutComp(ofst);
+		current = current->Next;
+	}
+}
