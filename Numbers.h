@@ -5,6 +5,7 @@ public:
 	static number* In(ifstream &ifst);
 	virtual void InData(ifstream &ifst) = 0; // ввод
 	virtual void Out(ofstream &ofst) = 0; // вывод
+	virtual float numbers_s() = 0;
 };
 class container
 {
@@ -34,6 +35,7 @@ class complex : public number {
 public:
 	void InData(ifstream &ifst); // ввод
 	void Out(ofstream &ofst); // вывод
+	float numbers_s();
 	complex() {} // создание без инициализации.
 };
 class simple : public number {
@@ -43,5 +45,6 @@ class simple : public number {
 public:
 	void InData(ifstream &ifst); // ввод
 	void Out(ofstream &ofst); // вывод
+	float numbers_s();
 	simple() {} // создание без инициализации.
 };

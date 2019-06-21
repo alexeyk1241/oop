@@ -2,15 +2,30 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-void complex::InData(ifstream &ifst) 
+
+float simple::numbers_s()
+{
+	float time;
+	time = numerator / denominator;
+	return time;
+}
+
+float complex::numbers_s()
+{
+	float time1;
+	time1 = sqrt(pow(real, 2) + pow(imaginary, 2));
+	return time1;
+}
+
+void complex::InData(ifstream &ifst)
 {
 	ifst >> imaginary >> real;
 }
-void simple::InData(ifstream &ifst) 
+void simple::InData(ifstream &ifst)
 {
 	ifst >> numerator >> denominator;
 }
-void complex::Out(ofstream &ofst) 
+void complex::Out(ofstream &ofst)
 {
 	if (real < 0)
 	{
@@ -23,7 +38,7 @@ void complex::Out(ofstream &ofst)
 			<< ", мнимая часть = " << real << endl << imaginary << "+" << real << "i" << endl;
 	}
 }
-void simple::Out(ofstream &ofst) 
+void simple::Out(ofstream &ofst)
 {
 	ofst << "It is Simple: числитель = " << numerator
 		<< ", знаменатель = " << denominator << endl << numerator << "/" << denominator << endl;
@@ -116,6 +131,8 @@ void container::Out(ofstream & ofst)
 	for (int j = 0; j < count; j++) {
 		ofst << j << ": ";
 		current->data->Out(ofst);
+		ofst << "значение = " <<
+			current->data->numbers_s() << endl;
 		current = current->Next;
 	}
 }
