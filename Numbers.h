@@ -1,10 +1,12 @@
 #include <fstream>
 using namespace std;
 class number {
+	char units[100];
 public:
 	static number* In(ifstream &ifst);
 	virtual void InData(ifstream &ifst) = 0; // ввод
 	virtual void Out(ofstream &ofst) = 0; // вывод
+	number() {};
 };
 class container
 {
