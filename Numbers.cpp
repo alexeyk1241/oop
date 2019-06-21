@@ -2,15 +2,90 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-void complex::InData(ifstream &ifst) 
+
+float simple::numbers_s()
+{
+	float time;
+	time = numerator / denominator;
+	return time;
+}
+
+float complex::numbers_s()
+{
+	float time1;
+	time1 = sqrt(pow(real, 2) + pow(imaginary, 2));
+	return time1;
+}
+
+bool number::Compare(number &other)
+{
+	return numbers_s() < other.numbers_s();
+}
+void container::Sort()
+{
+	Node* current;
+	current = Top;
+	Node* currentnext = current->Next;
+	for (int i = 0; i < count-1; i++)
+	{
+		if (current->data->Compare(*current->Next->data))
+		{
+			Node p;
+			p.data = current->data;
+			current->data = current->Next->data;
+			current->Next->data = p.data;
+			i = 0;
+			current = Top;
+		}
+		else
+		{
+			current = current->Next;
+		}
+	}
+}
+void container::Node::Processsort(Node *& Top)
+{
+	Node* currentnext = this->Next;
+	if (this == Top)//определяем указывает ли на голову
+	{
+		if (this->Next->Next == this)
+		{
+			Top = this->Next;
+		}
+		else
+		{
+			this->castl();
+			Top = this;
+		}
+	}
+	else
+	{
+		if (this->Next->Next == this)
+		{
+			Top = this->Next;
+		}
+		else
+			this->castl();
+	}
+}
+void container::Node::castl()
+{
+	Node* currentnext = this->Next;//Создаем копии, для смены местами
+	number* q1 = this->data;
+	number* q2 = currentnext->data;
+	this->data = q2;
+	currentnext->data = q1;
+}
+
+void complex::InData(ifstream &ifst)
 {
 	ifst >> imaginary >> real;
 }
-void simple::InData(ifstream &ifst) 
+void simple::InData(ifstream &ifst)
 {
 	ifst >> numerator >> denominator;
 }
-void complex::Out(ofstream &ofst) 
+void complex::Out(ofstream &ofst)
 {
 	if (real < 0)
 	{
@@ -23,7 +98,7 @@ void complex::Out(ofstream &ofst)
 			<< ", мнимая часть = " << real << endl << imaginary << "+" << real << "i" << endl;
 	}
 }
-void simple::Out(ofstream &ofst) 
+void simple::Out(ofstream &ofst)
 {
 	ofst << "It is Simple: числитель = " << numerator
 		<< ", знаменатель = " << denominator << endl << numerator << "/" << denominator << endl;
@@ -116,6 +191,8 @@ void container::Out(ofstream & ofst)
 	for (int j = 0; j < count; j++) {
 		ofst << j << ": ";
 		current->data->Out(ofst);
+		ofst << "значение = " <<
+			current->data->numbers_s() << endl;
 		current = current->Next;
 	}
 }
