@@ -1,8 +1,10 @@
 Filled container. 
- Container contains 2 elements.
-0: It is complex: действительная часть = 2, мнимая часть = -3
-2-3i
-1: It is Simple: числитель = 4, знаменатель = 5
-4/5
+Only complex
+0: 
+1: 
+2: It is complex: действительная часть = 12, мнимая часть = 169
+12+169i
+3: It is complex: действительная часть = 12, мнимая часть = -169
+12-169i
 Empty container. 
  Container contains 0 elements.

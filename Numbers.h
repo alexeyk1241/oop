@@ -5,6 +5,7 @@ public:
 	static number* In(ifstream &ifst);
 	virtual void InData(ifstream &ifst) = 0; // ввод
 	virtual void Out(ofstream &ofst) = 0; // вывод
+	virtual void OutComp(ofstream &ofst);
 };
 class container
 {
@@ -19,6 +20,7 @@ private:
 	Node* Top;
 	int count;
 public:
+	void OutComp(ofstream &ofst);
 	void In(ifstream &ifst); // ввод
 	void Out(ofstream &ofst); // вывод
 	void Clear(); // очистка контейнера от фигур
@@ -34,6 +36,7 @@ class complex : public number {
 public:
 	void InData(ifstream &ifst); // ввод
 	void Out(ofstream &ofst); // вывод
+	void OutComp(ofstream &ofst);
 	complex() {} // создание без инициализации.
 };
 class simple : public number {

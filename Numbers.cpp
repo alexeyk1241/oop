@@ -2,15 +2,15 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-void complex::InData(ifstream &ifst) 
+void complex::InData(ifstream &ifst)
 {
 	ifst >> imaginary >> real;
 }
-void simple::InData(ifstream &ifst) 
+void simple::InData(ifstream &ifst)
 {
 	ifst >> numerator >> denominator;
 }
-void complex::Out(ofstream &ofst) 
+void complex::Out(ofstream &ofst)
 {
 	if (real < 0)
 	{
@@ -23,7 +23,7 @@ void complex::Out(ofstream &ofst)
 			<< ", мнимая часть = " << real << endl << imaginary << "+" << real << "i" << endl;
 	}
 }
-void simple::Out(ofstream &ofst) 
+void simple::Out(ofstream &ofst)
 {
 	ofst << "It is Simple: числитель = " << numerator
 		<< ", знаменатель = " << denominator << endl << numerator << "/" << denominator << endl;
@@ -116,6 +116,25 @@ void container::Out(ofstream & ofst)
 	for (int j = 0; j < count; j++) {
 		ofst << j << ": ";
 		current->data->Out(ofst);
+		current = current->Next;
+	}
+}
+
+void number::OutComp(ofstream & ofst)
+{
+	ofst << endl;
+}
+void complex::OutComp(ofstream &ofst)
+{
+	Out(ofst);
+}
+void container::OutComp(ofstream & ofst)
+{
+	ofst << "Only complex" << endl;
+	Node* current = Top;
+	for (int i = 0; i < count; i++) {
+		ofst << i << ": ";
+		current->data->OutComp(ofst);
 		current = current->Next;
 	}
 }
