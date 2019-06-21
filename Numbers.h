@@ -27,7 +27,8 @@ public:
 };
 
 
-class complex : public number {
+class complex : public number 
+{
 	float real;
 	float imaginary;
 
@@ -36,7 +37,8 @@ public:
 	void Out(ofstream &ofst); // вывод
 	complex() {} // создание без инициализации.
 };
-class simple : public number {
+class simple : public number 
+{
 	int numerator;
 	int denominator;
 
@@ -44,4 +46,14 @@ public:
 	void InData(ifstream &ifst); // ввод
 	void Out(ofstream &ofst); // вывод
 	simple() {} // создание без инициализации.
+};
+class polcoor : public number
+{
+	int distance;
+	float corner;
+
+public:
+	void InData(ifstream &ifst);
+	void Out(ofstream &ofst);
+	polcoor() {}
 };

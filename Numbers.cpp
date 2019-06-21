@@ -2,15 +2,23 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-void complex::InData(ifstream &ifst) 
+
+void complex::InData(ifstream &ifst)
 {
 	ifst >> imaginary >> real;
 }
-void simple::InData(ifstream &ifst) 
+
+void simple::InData(ifstream &ifst)
 {
 	ifst >> numerator >> denominator;
 }
-void complex::Out(ofstream &ofst) 
+
+void polcoor::InData(ifstream &ifst)
+{
+	ifst >> distance >> corner;
+}
+
+void complex::Out(ofstream &ofst)
 {
 	if (real < 0)
 	{
@@ -23,11 +31,19 @@ void complex::Out(ofstream &ofst)
 			<< ", мнимая часть = " << real << endl << imaginary << "+" << real << "i" << endl;
 	}
 }
-void simple::Out(ofstream &ofst) 
+
+void simple::Out(ofstream &ofst)
 {
 	ofst << "It is Simple: числитель = " << numerator
 		<< ", знаменатель = " << denominator << endl << numerator << "/" << denominator << endl;
 }
+
+void polcoor::Out(ofstream &ofst)
+{
+	ofst << "It if Polar coordinate: длина = " << distance << ", угол = " << corner << endl
+		<< "(" << distance << "," << corner << "°)"<< endl;
+}
+
 number* number::In(ifstream &ifst)
 {
 	number *s;
@@ -39,6 +55,10 @@ number* number::In(ifstream &ifst)
 	else if (key == 2)
 	{
 		s = new simple;
+	}
+	else if (key == 3)
+	{
+		s = new polcoor;
 	}
 	else
 		return 0;
