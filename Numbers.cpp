@@ -3,6 +3,20 @@
 #include <fstream>
 using namespace std;
 
+float simple::numbers_s()
+{
+	float time;
+	time = numerator / denominator;
+	return time;
+}
+
+float complex::numbers_s()
+{
+	float time1;
+	time1 = sqrt(pow(real, 2) + pow(imaginary, 2));
+	return time1;
+}
+
 void complex::InData(ifstream &ifst)
 {
 	ifst >> imaginary >> real;
@@ -136,6 +150,8 @@ void container::Out(ofstream & ofst)
 	for (int j = 0; j < count; j++) {
 		ofst << j << ": ";
 		current->data->Out(ofst);
+		ofst << "значение = " <<
+			current->data->numbers_s() << endl;
 		current = current->Next;
 	}
 }
