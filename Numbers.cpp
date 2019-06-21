@@ -20,11 +20,13 @@ float complex::numbers_s()
 void complex::InData(ifstream &ifst)
 {
 	ifst >> imaginary >> real;
+	number::InData(ifst);
 }
 
 void simple::InData(ifstream &ifst)
 {
 	ifst >> numerator >> denominator;
+	number::InData(ifst);
 }
 
 void polcoor::InData(ifstream &ifst)
@@ -32,24 +34,40 @@ void polcoor::InData(ifstream &ifst)
 	ifst >> distance >> corner;
 }
 
+void number::InData(ifstream &ifst)
+{
+	ifst >> units;
+}
+void number::Out(ofstream &ofst)
+{
+	ofst << ", еденица измерения = " << units;
+
+}
+
 void complex::Out(ofstream &ofst)
 {
 	if (real < 0)
 	{
 		ofst << "It is complex: действительная часть = " << imaginary
-			<< ", мнимая часть = " << real << endl << imaginary << real << "i" << endl;
+			<< ", мнимая часть = " << real << endl << imaginary << real << "i";
+		number::Out(ofst);
+		ofst << endl;
 	}
 	else
 	{
 		ofst << "It is complex: действительная часть = " << imaginary
-			<< ", мнимая часть = " << real << endl << imaginary << "+" << real << "i" << endl;
+			<< ", мнимая часть = " << real << endl << imaginary << "+" << real << "i";
+		number::Out(ofst);
+		ofst << endl;
 	}
 }
 
 void simple::Out(ofstream &ofst)
 {
 	ofst << "It is Simple: числитель = " << numerator
-		<< ", знаменатель = " << denominator << endl << numerator << "/" << denominator << endl;
+		<< ", знаменатель = " << denominator << endl << numerator << "/" << denominator;
+	number::Out(ofst);
+	ofst << endl;
 }
 
 void polcoor::Out(ofstream &ofst)
