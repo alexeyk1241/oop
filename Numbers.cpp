@@ -1,140 +1,61 @@
 #include "Numbers.h"
 #include <iostream>
 #include <fstream>
-#include <math.h>
 using namespace std;
-
-float simple::numbers_s()
-{
-	float time;
-	time = numerator / denominator;
-	return time;
-}
-
-float complex::numbers_s()
-{
-	float time1;
-	time1 = sqrt(pow(real, 2) + pow(imaginary, 2));
-	return time1;
-}
-
-float polcoor::numbers_s()
-{
-	float time2 = (distance*cos(corner)) + (distance*sin(corner));
-	return time2;
-}
-
-bool number::Compare(number& other) {
-	return numbers_s() < other.numbers_s();
-}
-
-void container::Sort()
-{
-	Node* current = Top;
-
-	for (int i = 0; i < count; i++)
-	{
-		if (i > 0)
-		{
-			if (current->data->Compare(*current->Next->data))
-			{
-				Node p;
-				p.data = current->data;
-				current->data = current->Next->data;
-				current->Next->data = p.data;
-				i = 0;
-				current = Top;
-			}
-			else
-			{
-				current = current->Next;
-			}
-		}
-	}
-}
 
 void complex::InData(ifstream &ifst)
 {
 	ifst >> imaginary >> real;
-
-	if (ifst.fail())
-	{
-		cout << "Wrong input complex!" << endl;
-		system("pause");
-		exit(1);
-	}
-
-	number::InData(ifst);
 }
 
 void simple::InData(ifstream &ifst)
 {
 	ifst >> numerator >> denominator;
-
-	if (ifst.fail())
-	{
-		cout << "Wrong input simple!" << endl;
-		system("pause");
-		exit(1);
-	}
-
-	number::InData(ifst);
 }
 
-void polcoor::InData(ifstream &ifst)
+void complex::MultiMethod(number * other, ofstream & ofst)
 {
-	ifst >> distance >> corner;
-
-	if (ifst.fail())
-	{
-		cout << "Wrong input polcoor!" << endl;
-		system("pause");
-		exit(1);
-	}
-
-	number::InData(ifst);
+	other->MMcomplex(ofst);
 }
-
-void number::InData(ifstream &ifst)
+void complex::MMcomplex(ofstream & ofst)
 {
-	ifst >> units;
+	ofst << "Complex and Complex" << endl;
 }
-void number::Out(ofstream &ofst)
+void complex::MMsimple(ofstream & ofst)
 {
-	ofst << ", еденица измерения = " << units;
+	ofst << "Simple and Complex" << endl;
+}
+void simple::MultiMethod(number*other, ofstream & ofst)
+{
+	other->MMsimple(ofst);
+}
+void simple::MMcomplex(ofstream & ofst)
+{
+	ofst << "Complex and Simple" << endl;
+}
+void simple::MMsimple(ofstream & ofst)
+{
+	ofst << "Simple and Simple" << endl;
 }
 
 void complex::Out(ofstream &ofst)
 {
 	if (real < 0)
 	{
-		ofst << "It is complex: действительная часть = " << imaginary
-			<< ", мнимая часть = " << real << endl << imaginary << real << "i";
-		number::Out(ofst);
-		ofst << endl;
+		ofst << "It is Complex: действительная часть = " << imaginary
+			<< ", мнимая часть = " << real << endl << imaginary << real << "i" << endl;
 	}
 	else
 	{
 		ofst << "It is complex: действительная часть = " << imaginary
-			<< ", мнимая часть = " << real << endl << imaginary << "+" << real << "i";
-		number::Out(ofst);
-		ofst << endl;
+			<< ", мнимая часть = " << real << endl << imaginary << "+" << real << "i" << endl;
 	}
 }
+
 void simple::Out(ofstream &ofst)
 {
 	ofst << "It is Simple: числитель = " << numerator
-		<< ", знаменатель = " << denominator << endl << numerator << "/" << denominator;
-	number::Out(ofst);
-	ofst << endl;
-}
-
-void polcoor::Out(ofstream &ofst)
-{
-	ofst << "It if Polar coordinate: длина = " << distance << ", угол = " << corner << endl
-		<< "(" << distance << "," << corner << "°)" << endl;
-	number::Out(ofst);
-	ofst << endl;
+		<< ", знаменатель = " << denominator << endl << numerator << "/" << denominator << endl;
 }
 
 number* number::In(ifstream &ifst)
@@ -142,31 +63,19 @@ number* number::In(ifstream &ifst)
 	number *s;
 	int key;
 	ifst >> key;
-	if (key != 1 && key != 2 && key != 3)
+	if (key == 1) {
+		s = new complex;
+	}
+	else if (key == 2)
 	{
-		cout << "Wrong key!" << endl;
-		system("pause");
-		exit(1);
+		s = new simple;
 	}
 	else
-	{
-		if (key == 1) {
-			s = new complex;
-		}
-		else if (key == 2)
-		{
-			s = new simple;
-		}
-		else if (key == 3)
-		{
-			s = new polcoor;
-		}
-		else
-			return 0;
-		s->InData(ifst);
-		return s;
-	}
+		return 0;
+	s->InData(ifst);
+	return s;
 }
+
 container::Node::Node()
 {
 	this->Next = nullptr;
@@ -179,6 +88,7 @@ container::container()
 	Top = nullptr;
 	count = 0;
 }
+
 void container::Clear()
 {
 	Node* current = Top;
@@ -190,6 +100,23 @@ void container::Clear()
 	delete current;
 	count = 0;
 }
+
+void container::MultiMethod(ofstream & ofst)
+{
+	ofst << endl << "Multimethod." << endl;
+	Node* current_i = Top;
+	for (int i = 0; i < count - 1; i++) {
+		Node* current_j = current_i->Next;
+		for (int j = i + 1; j < count; j++) {
+			current_i->data->MultiMethod(current_j->data, ofst);
+			current_i->data->Out(ofst);
+			current_j->data->Out(ofst);
+			current_j = current_j->Next;
+		}
+		current_i = current_i->Next;
+	}
+}
+
 void container::In(ifstream & ifst)
 {
 	int flag;
@@ -238,27 +165,6 @@ void container::Out(ofstream & ofst)
 	for (int j = 0; j < count; j++) {
 		ofst << j << ": ";
 		current->data->Out(ofst);
-		ofst << "значение = " <<
-			current->data->numbers_s() << endl;
-		current = current->Next;
-	}
-}
-
-void number::OutComp(ofstream & ofst)
-{
-	ofst << endl;
-}
-void complex::OutComp(ofstream &ofst)
-{
-	Out(ofst);
-}
-void container::OutComp(ofstream & ofst)
-{
-	ofst << "Only complex" << endl;
-	Node* current = Top;
-	for (int i = 0; i < count; i++) {
-		ofst << i << ": ";
-		current->data->OutComp(ofst);
 		current = current->Next;
 	}
 }
