@@ -7,9 +7,9 @@ public:
 	virtual void InData(ifstream &ifst) = 0; // ввод
 	virtual void Out(ofstream &ofst) = 0; // вывод
 	virtual float numbers_s() = 0;
-	number() {};
 	bool Compare(number &others);
 	virtual void OutComp(ofstream &ofst);
+	number() {};
 };
 class container
 {
@@ -35,22 +35,21 @@ public:
 	~container() { Clear(); }
 };
 
-class complex : public number 
-{
+
+class complex : public number {
 	float real;
 	float imaginary;
 
 public:
+	void OutComp(ofstream &ofst);
 	void InData(ifstream &ifst); // ввод
 	void Out(ofstream &ofst); // вывод
 	float numbers_s();
-	void OutComp(ofstream &ofst);
 	complex() {} // создание без инициализации.
 };
-class simple : public number 
-{
-	int numerator;
-	int denominator;
+class simple : public number {
+	float numerator;
+	float denominator;
 
 public:
 	void InData(ifstream &ifst); // ввод
@@ -60,11 +59,12 @@ public:
 };
 class polcoor : public number
 {
-	int distance;
+	float distance;
 	float corner;
 
 public:
 	void InData(ifstream &ifst);
 	void Out(ofstream &ofst);
+	float numbers_s();
 	polcoor() {}
 };

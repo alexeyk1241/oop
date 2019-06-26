@@ -1,6 +1,7 @@
 #include "Numbers.h"
 #include <iostream>
 #include <fstream>
+#include <math.h>
 using namespace std;
 
 float simple::numbers_s()
@@ -17,64 +18,39 @@ float complex::numbers_s()
 	return time1;
 }
 
-bool number::Compare(number &other)
+float polcoor::numbers_s()
 {
+	float time2 = (distance*cos(corner)) + (distance*sin(corner));
+	return time2;
+}
+
+bool number::Compare(number& other) {
 	return numbers_s() < other.numbers_s();
 }
+
 void container::Sort()
 {
-	Node* current;
-	current = Top;
-	Node* currentnext = current->Next;
-	for (int i = 0; i < count-1; i++)
+	Node* current = Top;
+
+	for (int i = 0; i < count; i++)
 	{
-		if (current->data->Compare(*current->Next->data))
+		if (i > 0)
 		{
-			Node p;
-			p.data = current->data;
-			current->data = current->Next->data;
-			current->Next->data = p.data;
-			i = 0;
-			current = Top;
-		}
-		else
-		{
-			current = current->Next;
+			if (current->data->Compare(*current->Next->data))
+			{
+				Node p;
+				p.data = current->data;
+				current->data = current->Next->data;
+				current->Next->data = p.data;
+				i = 0;
+				current = Top;
+			}
+			else
+			{
+				current = current->Next;
+			}
 		}
 	}
-}
-void container::Node::Processsort(Node *& Top)
-{
-	Node* currentnext = this->Next;
-	if (this == Top)//определяем указывает ли на голову
-	{
-		if (this->Next->Next == this)
-		{
-			Top = this->Next;
-		}
-		else
-		{
-			this->castl();
-			Top = this;
-		}
-	}
-	else
-	{
-		if (this->Next->Next == this)
-		{
-			Top = this->Next;
-		}
-		else
-			this->castl();
-	}
-}
-void container::Node::castl()
-{
-	Node* currentnext = this->Next;//Создаем копии, для смены местами
-	number* q1 = this->data;
-	number* q2 = currentnext->data;
-	this->data = q2;
-	currentnext->data = q1;
 }
 
 void complex::InData(ifstream &ifst)
@@ -101,7 +77,6 @@ void number::InData(ifstream &ifst)
 void number::Out(ofstream &ofst)
 {
 	ofst << ", еденица измерения = " << units;
-
 }
 
 void complex::Out(ofstream &ofst)
@@ -121,7 +96,6 @@ void complex::Out(ofstream &ofst)
 		ofst << endl;
 	}
 }
-
 void simple::Out(ofstream &ofst)
 {
 	ofst << "It is Simple: числитель = " << numerator
@@ -133,7 +107,7 @@ void simple::Out(ofstream &ofst)
 void polcoor::Out(ofstream &ofst)
 {
 	ofst << "It if Polar coordinate: длина = " << distance << ", угол = " << corner << endl
-		<< "(" << distance << "," << corner << "°)"<< endl;
+		<< "(" << distance << "," << corner << "°)" << endl;
 }
 
 number* number::In(ifstream &ifst)
