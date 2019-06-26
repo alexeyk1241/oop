@@ -13,6 +13,15 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 	ifstream ifst(argv[1]);
+
+	if (!ifst)
+	{
+		cout << "No input file found!" << endl;
+		system("pause");
+		exit(1);
+		return 0;
+	}
+
 	ofstream ofst(argv[2]);
 	cout << "Start" << endl;
 	setlocale(LC_ALL, "Russian");
@@ -21,8 +30,16 @@ int main(int argc, char* argv[])
 	ofst << "Filled container. " << endl;
 
 	c.Out(ofst);
-	c.MultiMethod(ofst);
+	ofst << endl;
+	c.MultiMethod(ofst);//мультиметоды
+	ofst << endl;
+	c.Sort();
+	ofst << endl;
+	c.Out(ofst);
+	ofst << endl;
+	c.OutComp(ofst);
 	c.Clear();
+
 	ofst << "Empty container. " << endl;
 	c.Out(ofst);
 	cout << "Stop" << endl;
